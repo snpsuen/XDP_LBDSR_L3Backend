@@ -46,7 +46,7 @@ struct xdp_md {
   __u32 ingress_ifindex;
   __u32 rx_queue_index;
   __u32 egress_ifindex;
-}
+};
 */
 
 struct five_tuple {
@@ -55,4 +55,4 @@ struct five_tuple {
     uint32_t ip_destination;
     uint16_t port_source;
     uint16_t port_destination;
-}
+};
