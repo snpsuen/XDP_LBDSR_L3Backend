@@ -30,3 +30,12 @@ In this example, the backend servers are always selected randomly to process cli
 
 Finally, only IPv4 is considered in this use case. Neverthess, we believe the architecture should apply equally well to IPv6.
 
+### Environment setup
+
+The use case environment is set up as shown in the above diagram. Notably, the load balancer is located on a different IP subnet from that of the backend servers. To speed up site prep, all the participent systems are deployed in the form of docker container running on the same host.
+* Load balancer on the frontend subnet
+* Curl client on the front subnet
+* Router on both the frontend and backend subnet
+* Backend server X on the backend subnet
+* Backend Server Y on the backend subnet
+* Curl client: curlclient01
