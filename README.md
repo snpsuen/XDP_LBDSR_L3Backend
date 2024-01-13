@@ -24,7 +24,7 @@ The data plane is mainly drven by two distributed XDP bpf programs running in th
 
 ### Limitations
 
-Our primary concern is to sort out the network plumbing of XDP hooks on the data plane. This is to ensure any VIP service traffic will be steered from a client to a desirable endpoint and back through a DSR path. At present, we opt to leave out the control plane and use bpftool intead to load and attach the XDP bpf programs on the systems concerned. Settings about the load balancer and backend servers are also hardcoded into the programs.
+Our primary concern is to wire up the XDP hooks on the data plane in such a way that any VIP service traffic will be steered from a client to a desirable endpoint and back through a DSR path. At present, we opt to leave out the control plane and use bpftool intead to load and attach the XDP bpf programs on the systems concerned. Settings about the load balancer and backend servers are also hardcoded into the programs.
 
 In this example, the backend servers are always selected randomly to process client requests. We stop short of trying other load balancing algorithms or criteria.
 
