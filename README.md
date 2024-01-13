@@ -12,13 +12,13 @@ The data plane is mainly drven by two distributed XDP bpf programs running in th
 * Load balancer: xdp_lbr.epf
 * Backend servers: xdp_bkd.ebf
 
-(A) Key things done by xdp_lbr.epf at the load balancer upon recipt of the relevent packets
+(A) Key things done by {em} xdp_lbr.epf {/em}at the load balancer upon recipt of the relevent packets
 1. Select one of the backend servers
 2. Rewrite the destinaton IP from the VIP to the selected server
 3. Look up the next hop for the selected server in the FIB kenrel routing.
 4. Forward the packets to the found next hop via XDP_TX
 
-(B) Key things done by xdp_bkd.epf at the backend servers upon recipt of the relevent packets
+(B) Key things done by {em} xdp_bkd.epf {/em} at the backend servers upon recipt of the relevent packets
 1. Rewrite the destinaton IP from the selected server back to the VIP
 2. Pass the packets to the network stack for the service endpoint to process via XDP_TX
 
