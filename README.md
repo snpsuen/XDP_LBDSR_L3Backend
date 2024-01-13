@@ -5,3 +5,11 @@ This is a continuation of our work on XDP-based load balancing with direct serve
 To this end, the data plane is implemented on a novel architecture that involves cooperation between two XDP bpf programs attached to the load balaner and backend servers respectively. The setup allows us to focus excluively on the ingress traffic and thus make full use of the XDP hooks to fast-track workload redirection.
 
 ![XDP Load Balancer with L3 DSR](XDP_L3DSR_LoadBalancer01.png)
+
+### Data Plane Architecture
+
+The data plane is mainly drven by two distributed XDP bpf programs running in the kernel space of the load balancer and backend servers respectively. They work together to provide end to end clent/server communication for dispatch and delivery of workloads.
+* xdp_lbr.epf.o
+* xdp_bkd.epf.o
+
+  
