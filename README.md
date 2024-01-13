@@ -9,12 +9,16 @@ To this end, the data plane is implemented on a novel architecture that involves
 ### Data Plane Architecture
 
 The data plane is mainly drven by two distributed XDP bpf programs running in the kernel space of the load balancer and backend servers respectively. They work together to provide end to end clent/server communication for dispatch and delivery of workloads.
-1. Load balancer: xdp_lbr.epf
-   * Select one of the backend servers
-   * Rewrite the detination IP to the selected server
-   * Look up the next hop for the backend server in the kernel FIB table
-   * Return XDP_TX 
-3. Bckend servers: xdp_bkd.epf
+* Load balancer: xdp_lbr.epf
+* Backend servers: xdp_bkd.ebf
 
-xdp_lbr.epf is
-  
+(A) Key things done by xdp_lbr.epf at the load balancer upon recipt of the relevent packets
+1. Select one of the backend servers
+2. Rewrite the destinaton IP from the VIP to the selected server
+3. Look up the next hop for the selected server in the FIB kenrel routing.
+4. Forward the packets to the found next hop via XDP_TX
+
+(B) Key things done by xdp_bkd.epf at the backend servers upon recipt of the relevent packets
+1. Rewrite the destinaton IP from the selected server back to the VIP
+2. Pass the packets to the network stack for the service endpoint to process via XDP_TX
+
