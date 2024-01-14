@@ -80,7 +80,7 @@ Follow the steps below to set up the environment, build and test the XDP bpf pro
 		</tr>
     <tr>
 			<td>Virtual IP</td>
-			<td aligh="left">192.168.25.10/32</td>
+			<td aligh="left">192.168.25.10/24</td>
 		</tr> 
 	</tbody>
 </table>
