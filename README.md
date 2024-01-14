@@ -118,15 +118,16 @@ rm -rf XDP_LBDSR_L3Backend
 git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
 cd XDP*/Load*
 make
-
-	root@lbdsr0a:/ebpf/xdp# ip -4 addr
-	1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-	    inet 127.0.0.1/8 scope host lo
-	       valid_lft forever preferred_lft forever
-	12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdpgeneric/id:217 qdisc noqueue state UP group default  link-netnsid 0
-	    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
-	       valid_lft forever preferred_lft forever
-
+```
+Verify the program is attached to the desirabe inteface of the load balancer.
+```
+root@lbdsr0a:/ebpf/xdp# ip -4 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdpgeneric/id:217 qdisc noqueue state UP group default  link-netnsid 0
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
 ```
 
 
