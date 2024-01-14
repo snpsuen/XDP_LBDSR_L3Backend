@@ -202,7 +202,7 @@ URI: /
 .....
 ```
 
-7. Finally you may find it useful to open the kernel tracing pipe on the Linux host to keep track of the bpf_printk messages.
+7. Finally, you may find it useful to open the kernel tracing pipe on the Linux host and keep track of the bpf_printk messages from the XDP bpf programs.
 ```
 keyuser@ubunclone:~$ sudo cat /sys/kernel/debug/tracing/trace_pipe
 
