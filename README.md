@@ -149,12 +149,57 @@ root@backend0x:/ebpf/xdp/XDP_LBDSR_L3Backend/Backend# ip -4 addr
        valid_lft forever preferred_lft forever
 ```
 
-6. Build and run the XDP bpf program xdp_bkd.bpf on both the backend servers.
+6. Test it out by sending an HTTP request curl -s http://192.18.25.10 in a loop to the virtual IP from the curl client.
 ```
-docker exec -it backend0x bash
-git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
-cd XDP*/Back*
-make
+docker exec curlybox01 sh
+while true
+> do
+> curl -s http://192.168.25.10
+> sleep 3
+> done
+```
+Verify the requests are processed randamly by the two backend servers in a loop.
+```
+/ # while true
+> do
+> curl -s http://192.168.25.10
+> sleep 3
+> done
+Server address: 192.168.25.10:80
+Server name: backend0y
+Date: 11/Jan/2024:15:10:15 +0000
+URI: /
+Request ID: ba940d016ddc3e886f62897a3666b9d2
+Server address: 192.168.25.10:80
+Server name: backend0y
+Date: 11/Jan/2024:15:10:18 +0000
+URI: /
+Request ID: 8715fd6b274f86500bc55820aea34e77
+Server address: 192.168.25.10:80
+Server name: backend0x
+Date: 11/Jan/2024:15:10:21 +0000
+URI: /
+Request ID: 22f3aea79f1c680eb7436a6dcf5236bd
+Server address: 192.168.25.10:80
+Server name: backend0x
+Date: 11/Jan/2024:15:10:25 +0000
+URI: /
+Request ID: 5325d56fa9f66ce36749a4ba50938cff
+Server address: 192.168.25.10:80
+Server name: backend0y
+Date: 11/Jan/2024:15:10:28 +0000
+URI: /
+Request ID: 8afed8da91660592a36976731c371a70
+Server address: 192.168.25.10:80
+Server name: backend0x
+Date: 11/Jan/2024:15:10:31 +0000
+URI: /
+Request ID: f5f4b8f65f78b07b98f6cdc018959bd1
+Server address: 192.168.25.10:80
+Server name: backend0y
+Date: 11/Jan/2024:15:10:34 +0000
+URI: /
+.....
 ```
 
 
