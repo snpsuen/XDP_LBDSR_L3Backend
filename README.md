@@ -30,7 +30,7 @@ In this example, the backend servers are always selected randomly to process cli
 
 Finally, only IPv4 is considered in this use case. Neverthess, we believe the architecture should apply equally well to IPv6.
 
-### Environment setup
+### Environment Setup
 
 The use case environment is set up as per the above diagram. Note that the load balancer is located on a different IP subnet from that of the backend server. In our POC lab, to speed up prototyping and testing, all the participating systems are deployed in the form of docker containers running on the same host.
 * Load balancer lbdsr0a on the default subnet
@@ -38,5 +38,71 @@ The use case environment is set up as per the above diagram. Note that the load 
 * Router router0a attached to both the default and backend subnet
 * Backend server backend0x on the backend subnet
 * Backend Server backend0y on the backend subnet
+
+### Implementation Walkthrough
+
+Follow the steps below to set up the environment, build and test the XDP bpf programs. Here is a summary of IP addresses used in this example.
+<table>
+	<thead>
+		<tr>
+			<th scope="col">System/Network</th>
+			<th scope="col">IP addresses</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Default subnet</td>
+			<td aligh="left">172.17.0.0/24</td>
+		</tr>
+		<tr>
+			<td>Backend subnet</td>
+			<td aligh="left">172.19.0.0/24</td>
+		</tr>
+    <tr>
+			<td>lbdsr0a</td>
+			<td aligh="left">172.17.0.2</td>
+		</tr>
+    <tr>
+			<td>router0a</td>
+			<td aligh="left">172.17.0.3<br>172.19.0.2</td>
+		</tr>
+    <tr>
+			<td>curlybox01</td>
+			<td aligh="left">172.17.0.4</td>
+		</tr>
+    <tr>
+			<td>backend0x</td>
+			<td aligh="left">172.19.0.3</td>
+		</tr>
+    <tr>
+			<td>backend0y</td>
+			<td aligh="left">172.19.0.4</td>
+		</tr>
+    <tr>
+			<td>Virtual IP</td>
+			<td aligh="left">192.168.25.10/32</td>
+		</tr> 
+	</tbody>
+</table>
+
+1. Create an additional docker subnet and run the containers for the load balancer, router, backend servers and client on a suitable Linux host.
+```
+docker run -d --privileged --name lbdsr0a -h lbdsr0a snpsuen/ebpf-xdp:v03
+docker run -d --privileged --name router0a  -h router0a snpsuen/ebpf-xdp:v03
+docker network create -d bridge backend-network 
+docker network connect backend-network router0a	
+docker run -d --privileged --name backend0x -h backend0x --network backend-network snpsuen/xdp-nginx:v01
+docker run -d --privileged --name backend0y -h backend0y --network backend-network snpsuen/xdp-nginx:v01
+docker run -d --privileged --name curlybox01 -h curlybox01 ferrgo/curlybox sleep infinity
+```
+
+2. Add routes to forward traffic between the default and backend subnet via router0a. 
+```
+docker exec lbdsr0a ip route add 172.19.0.0/24 via 172.17.0.3
+docker exec curlybox01 ip route add 172.19.0.0/24 via 172.17.0.3
+docker exec backend0x ip route add 172.17.0.0/24 via 172.19.0.2
+docker exec backend0y ip route add 172.17.0.0/24 via 172.19.0.2
+```
+
 
 
