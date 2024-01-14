@@ -104,5 +104,13 @@ docker exec backend0x ip route add 172.17.0.0/24 via 172.19.0.2
 docker exec backend0y ip route add 172.17.0.0/24 via 172.19.0.2
 ```
 
+3. Configure L3 connectivity to the virtual IP
+```
+docker exec backend0x ip addr add 192.168.25.10/24 dev lo
+docker exec backend0y ip addr add 192.168.25.10/24 dev lo
+docker exec curlybox01 ip route add 192.168.25.10/32 via 172.17.0.2
+docker exec lbdsr0a ip route add 192.168.25.10/32 via 172.17.0.3
+```
+
 
 
