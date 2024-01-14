@@ -109,8 +109,24 @@ docker exec backend0y ip route add 172.17.0.0/24 via 172.19.0.2
 docker exec backend0x ip addr add 192.168.25.10/24 dev lo
 docker exec backend0y ip addr add 192.168.25.10/24 dev lo
 docker exec curlybox01 ip route add 192.168.25.10/32 via 172.17.0.2
-docker exec lbdsr0a ip route add 192.168.25.10/32 via 172.17.0.3
 ```
 
+4. Build and run the XDP bpf program xdp_lbr.bpf on the load balancer
+```
+docker exec -it lbdsr0a bash
+rm -rf XDP_LBDSR_L3Backend
+git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
+cd XDP*/Load*
+make
+
+	root@lbdsr0a:/ebpf/xdp# ip -4 addr
+	1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+	    inet 127.0.0.1/8 scope host lo
+	       valid_lft forever preferred_lft forever
+	12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdpgeneric/id:217 qdisc noqueue state UP group default  link-netnsid 0
+	    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+	       valid_lft forever preferred_lft forever
+
+```
 
 
