@@ -104,22 +104,21 @@ docker exec backend0x ip route add 172.17.0.0/24 via 172.19.0.2
 docker exec backend0y ip route add 172.17.0.0/24 via 172.19.0.2
 ```
 
-3. Configure L3 connectivity to the virtual IP
+3. Configure L3 connectivity to the virtual IP.
 ```
 docker exec backend0x ip addr add 192.168.25.10/24 dev lo
 docker exec backend0y ip addr add 192.168.25.10/24 dev lo
 docker exec curlybox01 ip route add 192.168.25.10/32 via 172.17.0.2
 ```
 
-4. Build and run the XDP bpf program xdp_lbr.bpf on the load balancer
+4. Build and run the XDP bpf program xdp_lbr.bpf on the load balancer.
 ```
 docker exec -it lbdsr0a bash
-rm -rf XDP_LBDSR_L3Backend
 git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
 cd XDP*/Load*
 make
 ```
-Verify the program is attached to the desirabe inteface of the load balancer.
+Verify the program is attached in the xdpgeneric mode to the desirabe inteface of the load balancer.
 ```
 root@lbdsr0a:/ebpf/xdp# ip -4 addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -129,5 +128,34 @@ root@lbdsr0a:/ebpf/xdp# ip -4 addr
     inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
        valid_lft forever preferred_lft forever
 ```
+
+5. Build and run the XDP bpf program xdp_bkd.bpf on both the backend servers.
+```
+docker exec -it backend0x bash
+git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
+cd XDP*/Back*
+make
+```
+Verify the program is attached in the xdpgeneric mode to the desirabe inteface of the backend servers.
+```
+root@backend0x:/ebpf/xdp/XDP_LBDSR_L3Backend/Backend# ip -4 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet 192.168.25.10/24 scope global lo
+       valid_lft forever preferred_lft forever
+20: eth0@if21: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdpgeneric/id:224 qdisc noqueue state UP group default  link-netnsid 0
+    inet 172.19.0.3/16 brd 172.19.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+```
+
+6. Build and run the XDP bpf program xdp_bkd.bpf on both the backend servers.
+```
+docker exec -it backend0x bash
+git clone https://github.com/snpsuen/XDP_LBDSR_L3Backend
+cd XDP*/Back*
+make
+```
+
 
 
