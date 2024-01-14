@@ -202,5 +202,43 @@ URI: /
 .....
 ```
 
+7. Finally you may find it useful to open the kernel tracing pipe on the Linux host to keep track of the bpf_printk messages.
+```
+keyuser@ubunclone:~$ sudo cat /sys/kernel/debug/tracing/trace_pipe
+
+           <...>-7317    [002] dNs11  2027.743106: bpf_trace_printk: Added a new entry to the forward flow table for the backend ID 4
+           <...>-7317    [002] dNs11  2027.743126: bpf_trace_printk: Packet is to be dispatched to the backend IP Q1: 172
+           <...>-7317    [002] dNs11  2027.743127: bpf_trace_printk: Packet is to be displatched the backend IP Q1.19.0.4
+
+           <...>-7317    [002] dNs11  2027.743131: bpf_trace_printk: Looked up relevant information in the FIB table with rc 0
+           <...>-7317    [002] dNs11  2027.743132: bpf_trace_printk: Found fib_params.dmac[0-2] = 2:42:ac
+           <...>-7317    [002] dNs11  2027.743133: bpf_trace_printk: Found fib_params.dmac[3-5] = 11:0:3
+
+           <...>-7317    [002] dNs11  2027.743134: bpf_trace_printk: Found fib_params.smac[0-2] = 2:42:ac
+           <...>-7317    [002] dNs11  2027.743135: bpf_trace_printk: Found fib_params.smac[3-5] = 11:0:2
+
+           <...>-7317    [002] dNs11  2027.743136: bpf_trace_printk: Found FIB nexthop IP Q1: 172
+           <...>-7317    [002] dNs11  2027.743137: bpf_trace_printk: Found FIB nexthop IP Q1.17.0.3
+
+           <...>-7317    [002] dNs11  2027.743137: bpf_trace_printk: Found FIB ifindex 12
+
+           <...>-7317    [002] dNs11  2027.743139: bpf_trace_printk: Before XDP_TX, packet is to be transported from the source IP Q1: 172
+           <...>-7317    [002] dNs11  2027.743140: bpf_trace_printk: Before XDP_TX, packet is to be transported from the source IP Q1.17.0.4
+
+           <...>-7317    [002] dNs11  2027.743141: bpf_trace_printk: To the destination IP Q1: 172
+           <...>-7317    [002] dNs11  2027.743142: bpf_trace_printk: To the destination IP Q1.19.0.4
+
+           <...>-7317    [002] dNs11  2027.743143: bpf_trace_printk: Before XDP_TX, from the source MAC 2:42:ac:xx:xx:xx
+           <...>-7317    [002] dNs11  2027.743144: bpf_trace_printk: Before XDP_TX, from the source MAC xx:xx:xx:11:0:2
+
+           <...>-7317    [002] dNs11  2027.743145: bpf_trace_printk: To the destination MAC 2:42:ac:xx:xx:xx
+           <...>-7317    [002] dNs11  2027.743146: bpf_trace_printk: To the destination MAC xx:xx:xx:11:0:3
+
+           <...>-7317    [002] dNs11  2027.743146: bpf_trace_printk: Returning XDP_TX...
+           <...>-7317    [002] dNs11  2027.743241: bpf_trace_printk: Backend>> Packet is to be dispatched to the backend IP Q1: 192
+           <...>-7317    [002] dNs11  2027.743243: bpf_trace_printk: Backend>> Packet is to be dispatched to the backend IP Q1.168.25.10
+
+```
+
 
 
