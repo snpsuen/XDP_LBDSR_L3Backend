@@ -32,7 +32,7 @@ Finally, only IPv4 is considered in this use case. Neverthess, we believe the ar
 
 ### Environment setup
 
-The use case environment is set up as per the above diagram. Note that the load balancer is located on a different IP subnet from that of the backend server. In our POC lab, to speed up prototyping and testing, all the participating systems are deployed in the form of docker container running on the same host.
+The use case environment is set up as per the above diagram. Note that the load balancer is located on a different IP subnet from that of the backend server. In our POC lab, to speed up prototyping and testing, all the participating systems are deployed in the form of docker containers running on the same host.
 * Load balancer lbdsr0a on the default subnet
 * Curl client curlybox01 on the default subnet
 * Router router0a attached to both the default and backend subnet
