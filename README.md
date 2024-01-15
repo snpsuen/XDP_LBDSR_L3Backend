@@ -20,7 +20,7 @@ The data plane is mainly drven by two distributed XDP bpf programs running in th
 
 (B) Key things done by <em> xdp_bkd.epf </em> at the backend servers upon recipt of the relevent packets
 1. Rewrite the destinaton IP from the selected server back to the VIP
-2. Pass the packets to the network stack for the service endpoint to process via XDP_TX
+2. Pass the packets to the network stack for the service endpoint to process via XDP_PASS
 
 ### Limitations
 
