@@ -2,7 +2,7 @@
 
 This is a continuation of our work on XDP-based load balancing with direct server return (DSR), [(see here)](https://github.com/snpsuen/XDP_LBDSR_Enhance). In this particular use case, the backend servers are NOT located on the same subnet as the load balancer. In other words, they are more than one subnet or hop away from where the workloads are dispatched.
 
-To this end, the data plane is implemented on a novel architecture that involves cooperation between two XDP bpf programs attached to the load balaner and backend servers respectively. The setup allows us to focus exclusively on the ingress traffic and thus make full use of the XDP hooks to fast-track workload redirection.
+To this end, the data plane is implemented on a novel architecture that involves cooperation between two XDP bpf programs attached to the load balancer and backend servers respectively. The setup allows us to focus exclusively on the ingress traffic and thus make full use of the XDP hooks to fast-track workload redirection.
 
 ![XDP Load Balancer with L3 DSR](XDP_L3DSR_LoadBalancer01.png)
 
@@ -28,7 +28,7 @@ Our primary concern is to wire up the XDP hooks on the data plane in such a way 
 
 In this example, the backend servers are always selected randomly to process client requests. We stop short of trying other load balancing algorithms or criteria.
 
-Finally, only IPv4 is considered in this use case. Neverthess, we believe the architecture should apply equally well to IPv6.
+Finally, only IPv4 is considered in this use case. Nevertheless, we believe the architecture should apply equally well to IPv6.
 
 ### Environment Setup
 
