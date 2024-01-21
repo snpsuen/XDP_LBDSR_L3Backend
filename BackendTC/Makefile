@@ -8,7 +8,7 @@ BPF_C = ${BPF_TARGET:=.c}
 BPF_OBJ = ${BPF_C:.c=.o}
 
 all: $(BPF_OBJ)
-	-tc qdisc del dev eth0 clsact
+	-tc qdisc delete dev eth0 clsact
 	tc qdisc add dev eth0 clsact
 	tc filter add dev eth0 egress bpf direct-action obj $(BPF_OBJ) sec $(SEC)
 	tc qdisc show dev eth0
