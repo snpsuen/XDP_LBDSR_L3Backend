@@ -13,8 +13,7 @@ make
 
 Another point of note is, there is no need to run these commands to configure the virtual IP as an loopback aliases on the backend servers.
 
-```
 ~~docker exec backend0x ip addr add 192.168.25.10/24 dev lo~~
 ~~docker exec backend0y ip addr add 192.168.25.10/24 dev lo~~
-```
+
 
