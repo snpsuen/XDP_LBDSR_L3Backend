@@ -28,6 +28,14 @@
 #define BPF_F_NO_PREALLOC (1U << 0)
 #endif
 
+#ifndef TC_ACT_OK
+#define TC_ACT_OK               0
+#endif
+
+#ifndef TC_ACT_SHOT
+#define TC_ACT_SHOT             2
+#endif
+
 #define QUAD2V(a, b, c, d) (unsigned int)(a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d)
 #define VAL19(x) (unsigned int)(172 * 256 * 256 * 256 + 19 * 256 * 256 + 0 * 256 + x)
 #define VAL17(x) (unsigned int)(172 * 256 * 256 * 256 + 17 * 256 * 256 + 0 * 256 + x)
