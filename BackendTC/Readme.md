@@ -87,14 +87,4 @@ Request ID: 28cc1893ab68b1fae7114ba82144d2f4
 Server address: 172.19.0.4:80
 Server name: backend0y
 Date: 22/Jan/2024:00:08:24 +0000
-URI: /
-Request ID: 139fdb931d526604aec16fb0c7cc9cff
-Server address: 172.19.0.3:80
-Server name: backend0x
-Date: 22/Jan/2024:00:08:27 +0000
-URI: /
-Request ID: 8b87bbb3d4d7af129f9902f114a71d40
-Server address: 172.19.0.3:80
-Server name: backend0x
-Date: 22/Jan/2024:00:08:30 +0000
 ```
