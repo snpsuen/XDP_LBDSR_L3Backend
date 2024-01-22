@@ -33,7 +33,7 @@ PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3054ms
 ```
 
-After that, you are read to test it out by issuing an HTTP request for the virtual IP in a loop from the curl client.
+After that, you are ready to test it out by issuing an HTTP request for the virtual IP in a loop from the curl client.
 
 ```
 keyuser@ubunclone:~$ docker exec -it curlybox01 sh
