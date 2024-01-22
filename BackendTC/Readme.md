@@ -35,10 +35,28 @@ PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
 
 #### Latest update 
 
-Fixed a bug in the XDP bpf program running on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place.
+Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place.
+
+Make sure the XDP & TC bpf programs have been loaded properly onto the load balancer and backend servers.
+```
+keyuser@ubunclone:~$ docker exec lbdsr0a ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdpgeneric qdisc noqueue state UP mode DEFAULT group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    prog/xdp id 216 tag 28ee10715d4d09b1 jited
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ docker exec backend0x tc filter show dev eth0 egress
+filter protocol all pref 49152 bpf chain 0
+filter protocol all pref 49152 bpf chain 0 handle 0x1 tc_bkd.bpf.o:[tc_egress] direct-action not_in_hw id 222 tag ca2c5562eaa44630 jited
+keyuser@ubunclone:~$
+keyuser@ubunclone:~$ docker exec backend0y tc filter show dev eth0 egress
+filter protocol all pref 49152 bpf chain 0
+filter protocol all pref 49152 bpf chain 0 handle 0x1 tc_bkd.bpf.o:[tc_egress] direct-action not_in_hw id 228 tag ca2c5562eaa44630 jited
+keyuser@ubunclone:~$
+```
 
 After that, you are ready to test it out by issuing an HTTP request for the virtual IP in a loop from the curl client.
-
 ```
 keyuser@ubunclone:~$ docker exec -it curlybox01 sh
 
