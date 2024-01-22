@@ -17,7 +17,7 @@ Meanwhile, there is no need to run these commands to configure the virtual IP as
 
 ~~docker exec backend0y ip addr add 192.168.25.10/24 dev lo~~
 
-Another thing is, depending on your setup environment, you will probably need to ping from the load balancer container to a backend server first in order to populate the FIB kernel table appropriately. Otherwise the XDP bpf program running on the load balancer may complain there is no neighbour to forward the backend traffic to.
+Another thing is, depending on your setup environment, you probably need to ping from the load balancer container to a backend server first in order to populate the FIB kernel table appropriately. Otherwise the XDP bpf program running on the load balancer may complain there is no neighbour to forward the backend traffic to.
 
 ```
 keyuser@ubunclone:~$ docker exec -it lbdsr0a bash
