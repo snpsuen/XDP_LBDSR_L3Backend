@@ -88,6 +88,8 @@ int dispatchworkload(struct xdp_md *ctx) {
                 }
 
                 iph->daddr = bpf_htonl(quad2uint(172, 19, 0, backend));
+                iph->check = iph_csum(iph);
+
                 uint8_t* destquad = uint2quad(&(iph->daddr));
                 bpf_printk("Packet is to be dispatched to the backend IP Q1: %u", destquad[0]);
                 bpf_printk("Packet is to be displatched the backend IP Q1.%u.%u.%u\n", destquad[1], destquad[2], destquad[3]);
@@ -121,7 +123,7 @@ int dispatchworkload(struct xdp_md *ctx) {
                         /* ip_decrease_ttl(iph);
                         ip_decrease_ttl(iph); */
 
-                        iph->check = iph_csum(iph);
+                        /* iph->check = iph_csum(iph); */
                         /* iph->ttl--; */
 
                         memcpy(eth->h_dest, fib_params.dmac, ETH_ALEN);
