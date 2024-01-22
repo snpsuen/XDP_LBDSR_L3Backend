@@ -33,9 +33,9 @@ PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3054ms
 ```
 
-#### Latest update 
+#### _Latest update_ 
 
-Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place.
+_Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place_
 
 Make sure the XDP & TC bpf programs have been loaded properly onto the load balancer and backend servers.
 ```
