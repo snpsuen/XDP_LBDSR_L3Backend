@@ -33,6 +33,10 @@ PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3054ms
 ```
 
+#### Latest update 
+
+Fixed a bug in the XDP bpf program running on the load balancer.  As a result, you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place.
+
 After that, you are ready to test it out by issuing an HTTP request for the virtual IP in a loop from the curl client.
 
 ```
