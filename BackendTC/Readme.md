@@ -33,10 +33,11 @@ PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3054ms
 ```
 
-#### _Latest update_ 
+Latest update 
 
-_Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place_
+Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now you can ignore the above remark that suggests pinging from the load balancer to a backend server in the first place.
 
+---
 Make sure the XDP & TC bpf programs have been loaded properly onto the load balancer and backend servers.
 ```
 keyuser@ubunclone:~$ docker exec lbdsr0a ip link
