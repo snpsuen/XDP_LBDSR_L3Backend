@@ -20,14 +20,24 @@ Meanwhile, there is no need to run these commands to configure the virtual IP as
 Another thing is, depending on your setup environment, you will probably need to ping from the load balancer container to a backend server first in order to populate the FIB kernel table appropriately. Otherwise the XDP bpf program running on the load balancer may complain there is no neighbour to forward the backend traffic to.
 
 ```
-docker exec -it lbdsr bash
-ping 172.19.0.3
+keyuser@ubunclone:~$ docker exec -it lbdsr0a bash
+
+root@lbdsr0a:/ebpf/xdp# ping 172.19.0.3
+PING 172.19.0.3 (172.19.0.3) 56(84) bytes of data.
+64 bytes from 172.19.0.3: icmp_seq=1 ttl=63 time=0.214 ms
+64 bytes from 172.19.0.3: icmp_seq=2 ttl=63 time=0.223 ms
+64 bytes from 172.19.0.3: icmp_seq=3 ttl=63 time=0.122 ms
+64 bytes from 172.19.0.3: icmp_seq=4 ttl=63 time=0.088 ms
+^C
+--- 172.19.0.3 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3054ms
 ```
 
 After that, you are read to test it out by issuing an HTTP request for the virtual IP in a loop from the curl client.
 
 ```
 keyuser@ubunclone:~$ docker exec -it curlybox01 sh
+
 / #
 / # while true
 > do
