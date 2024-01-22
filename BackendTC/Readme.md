@@ -11,10 +11,16 @@ cd XDP*/*TC
 make
 ```
 
-Another point of note is, there is no need to run these commands to configure the virtual IP as an loopback alias on the backend servers.
+Meanwhile, there is no need to run these commands to configure the virtual IP as an loopback alias on the backend servers.
 
 ~~docker exec backend0x ip addr add 192.168.25.10/24 dev lo~~
 
 ~~docker exec backend0y ip addr add 192.168.25.10/24 dev lo~~
 
+Another thing is, depending on your setup platform, you may need to ping from the load balancer container to a backend server first in order to populate the FIB kernel table appropriately. Otherwise the XDP bpf program running on the load balancer may complain there is no neighbour to forward the backend traffic to.
+
+```
+docker exec -it lbdsr bash
+ping 172.19.0.3
+```
 
