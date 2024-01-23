@@ -1,5 +1,10 @@
 ## Layer 3 DSR by XDP-based Load Balancer
 
+#### Latest update 
+
+Fixed a bug in xdp_lbdsr.bof.o on the load balancer. Now there is no need to ping from the load balancer to a backend server in order to pre-fill the FIB table in the first place.
+
+---
 This is a continuation of our work on XDP-based load balancing with direct server return (DSR), [(see here)](https://github.com/snpsuen/XDP_LBDSR_Enhance). In this particular use case, the backend servers are NOT located on the same subnet as the load balancer. In other words, they are more than one subnet or hop away from where the workloads are dispatched.
 
 To this end, the data plane is implemented on a novel architecture that involves cooperation between two XDP bpf programs attached to the load balancer and backend servers respectively. The setup allows us to focus exclusively on the ingress traffic and thus make full use of the XDP hooks to fast-track workload redirection.
